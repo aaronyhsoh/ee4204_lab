@@ -7,7 +7,7 @@ udp_client.c: the source file of the client in tcp transmission
 // int send_packet(int sockfd, char sends[DATALEN+1], long slen, struct sockaddr *addr, int addrlen);
 float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrlen);                       //transmission function
 void tv_sub(struct  timeval *out, struct timeval *in);	    //calcu the time interval between out and in
-int retransmit(int sockfd, char sends[DATALEN+1], struct sockaddr *addr, int addrlen, struct ack_so *ack, int slen);
+int retransmit(int sockfd, char sends[DATALEN+1], struct sockaddr addr, int addrlen, struct ack_so ack, int slen);
 
 int main(int argc, char *argv[])
 {
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 	exit(0);
 }
 
-float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrlen)
+float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr addr, int addrlen)
 {
 	char *buf;
 	long lsize, ci;
