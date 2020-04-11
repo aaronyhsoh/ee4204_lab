@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 	exit(0);
 }
 
-void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob);
+void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 {
 	char buf[BUFSIZE];
 	FILE *fp;
