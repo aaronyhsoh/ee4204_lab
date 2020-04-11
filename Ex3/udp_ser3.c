@@ -55,6 +55,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 	int end, n = 0;
 	long lseek=0;
 	end = 0;
+	int numPackets = 0;
 	
 	printf("receiving data!\n");
 
@@ -79,6 +80,8 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 			exit(1);
 		}
 		lseek += n;
+		printf("Num packets: %d\n", numPackets);
+		numPackets++;
 	}
 	
 	if ((fp = fopen ("myTCPreceive.txt","wt")) == NULL)
