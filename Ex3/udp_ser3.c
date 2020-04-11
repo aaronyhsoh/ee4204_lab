@@ -87,8 +87,6 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 	int numPackets = 0;
 	int randNum;
 	
-	randomize();
-	
 	randNum = rand() % 100 + 1;
 	printf("random: %d\n", randNum);
 	
