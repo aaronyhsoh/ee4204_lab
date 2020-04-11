@@ -124,6 +124,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 			}
 		}
 		
+		ci += slen;
 		if ((n= recvfrom(sockfd, &ack, 2, 0, addr, (socklen_t *)&addrlen))==-1)                                   //receive the ack
 		{ 
 			printf("error when receiving\n");
@@ -133,9 +134,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 		{
 			printf("error in transmission\n");
 		} 
-		else {
-			ci += slen;
-		}
+		
 		printf("ack received");
 	}
 	
