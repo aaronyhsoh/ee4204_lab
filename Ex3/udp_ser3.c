@@ -3,10 +3,32 @@ tcp_ser.c: the source file of the server in tcp transmission
 ***********************************/
 
 #include "headsock.h"
-#include <stdlib.h>
+#include <time.h>
+#include <errno.h>    
+
+int msleep(long msec)
+{
+    struct timespec ts;
+    int res;
+
+    if (msec < 0)
+    {
+        errno = EINVAL;
+        return -1;
+    }
+
+    ts.tv_sec = msec / 1000;
+    ts.tv_nsec = (msec % 1000) * 1000000;
+
+    do {
+        res = nanosleep(&ts, &ts);
+    } while (res && errno == EINTR);
+
+    return res;
+}
 
 #define BACKLOG 10
-
+int msleep(msec);
 void str_ser(int sockfd, struct sockaddr *addr, int len);                                                        // transmitting and receiving function
 
 int main(void)
@@ -83,7 +105,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 		}
 		printf("Num packets: %d\n", numPackets);
 		numPackets++;
-		delay(1000);
+		msleep(1000);
 	}
 	
 	if ((fp = fopen ("myTCPreceive.txt","wt")) == NULL)
