@@ -2,7 +2,6 @@
 tcp_ser.c: the source file of the server in tcp transmission 
 ***********************************/
 
-
 #include "headsock.h"
 
 #define BACKLOG 10

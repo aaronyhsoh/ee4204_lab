@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	
 	printf("error_prob = %s\n", argv[2]);
 
-	if (argc != 2) {
+	if (argc != 3) {
 		printf("parameters not match");
 	}
 
@@ -116,15 +116,21 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 			printf("send error!");								//send the data
 			exit(1);
 		}
-		ci += slen;
+		
+		if ((n= recvfrom(sockfd, &ack, 2, 0, addr, (socklen_t *)&addrlen))==-1)                                   //receive the ack
+		{ 
+			printf("error when receiving\n");
+			exit(1);
+		}
+		if (ack.num != 1|| ack.len != 0) 
+		{
+			printf("error in transmission\n");
+		} 
+		else {
+			ci += slen;
+		}
 	}
-	if ((n= recvfrom(sockfd, &ack, 2, 0, addr, (socklen_t *)&addrlen))==-1)                                   //receive the ack
-	{ 
-		printf("error when receiving\n");
-		exit(1);
-	}
-	if (ack.num != 1|| ack.len != 0)
-		printf("error in transmission\n");
+	
 	gettimeofday(&recvt, NULL);
 	*len= ci;                                                         //get current time
 	tv_sub(&recvt, &sendt);                                                                 // get the whole trans time
