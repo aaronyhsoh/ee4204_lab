@@ -87,13 +87,14 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 		if ((n= recvfrom(sockfd, &recvs, DATALEN, 0, addr, (socklen_t *)&len))==-1)                                   //receive the packet
 		{
 			printf("error when receiving\n");
-			exit(1);
+			ack.num = -1;
 		}
 		if (recvs[n-1] == '\0')									//if it is the end of the file
 		{
 			end = 1;
 			n --;
 		}
+		printf("n: %d\n", n);
 		memcpy((buf+lseek), recvs, n);
 		ack.num = 1;
 		ack.len = 0;
