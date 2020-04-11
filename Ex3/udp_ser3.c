@@ -94,7 +94,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 		if ((n= recvfrom(sockfd, &recvs, DATALEN, 0, addr, (socklen_t *)&len))==-1)                                   //receive the packet
 		{
 			printf("error when receiving\n");
-			ack.num = -1;
+			//ack.num = -1;
 		}
 		if (recvs[n-1] == '\0')									//if it is the end of the file
 		{
@@ -121,9 +121,9 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 			printf("send error!");								//send the ack
 			exit(1);
 		}
-		printf("Num packets: %d\n", numPackets);
+		//printf("Num packets: %d\n", numPackets);
 		numPackets++;
-		msleep(50);
+		//msleep(50);
 	}
 	
 	if ((fp = fopen ("myUDPreceive.txt","wt")) == NULL)

@@ -127,11 +127,11 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 		}
 		if (ack.num == 0|| ack.len != 0) 
 		{
-			printf("error in transmission\n");
+			// printf("error in transmission\n");
 			//retransmit(sockfd, sends, addr, addrlen, ack, slen);
 			int retransmit_fail = 1;
 			while (retransmit_fail) {
-				printf("retransmitting\n");
+				//printf("retransmitting\n");
 				if ((n = sendto(sockfd, &sends, slen, 0, addr, addrlen)) == -1) {
 					printf("send error!");		
 				}
@@ -150,7 +150,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 			ci += slen;
 		}
 		
-		printf("ack received: %d\n", ack.num);
+		//printf("ack received: %d\n", ack.num);
 	}
 	
 	gettimeofday(&recvt, NULL);
