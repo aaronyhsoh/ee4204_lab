@@ -1,5 +1,5 @@
 /*******************************
-tcp_client.c: the source file of the client in tcp transmission 
+udp_client.c: the source file of the client in tcp transmission 
 ********************************/
 
 #include "headsock.h"
@@ -42,14 +42,14 @@ int main(int argc, char **argv)
 	}
         
 	addrs = (struct in_addr **)sh->h_addr_list;
-	sockfd = socket(AF_INET, SOCK_STREAM, 0);                           //create the socket
+	sockfd = socket(AF_INET, SOCK_DGRAM, 0);                           //create the socket
 	if (sockfd <0)
 	{
 		printf("error in socket");
 		exit(1);
 	}
 	ser_addr.sin_family = AF_INET;                                                      
-	ser_addr.sin_port = htons(MYTCP_PORT);
+	ser_addr.sin_port = htons(MYUDP_PORT);
 	memcpy(&(ser_addr.sin_addr.s_addr), *addrs, sizeof(struct in_addr));
 	bzero(&(ser_addr.sin_zero), 8);
 	ret = connect(sockfd, (struct sockaddr *)&ser_addr, sizeof(struct sockaddr));         //connect the socket with the host
@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 		exit(0);
 	}
 
-	ti = str_cli(fp, sockfd, &len);                       //perform the transmission and receiving
+	ti = str_cli(fp, sockfd, &len, (struct sockaddr *)&ser_addr, sizeof(struct sockaddr_in));                       //perform the transmission and receiving
 	rt = (len/(float)ti);                                         //caculate the average transmission rate
 	printf("Time(ms) : %.3f, Data sent(byte): %d\nData rate: %f (Kbytes/s)\n", ti, (int)len, rt);
 
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 	exit(0);
 }
 
-float str_cli(FILE *fp, int sockfd, long *len)
+float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrlen)
 {
 	char *buf;
 	long lsize, ci;
@@ -109,15 +109,15 @@ float str_cli(FILE *fp, int sockfd, long *len)
 		else 
 			slen = DATALEN;
 		memcpy(sends, (buf+ci), slen);
-		n = send(sockfd, &sends, slen, 0);
+		n = sendto(sockfd, &sends, slen, 0, addr, addrlen);
 		if(n == -1) {
 			printf("send error!");								//send the data
 			exit(1);
 		}
 		ci += slen;
 	}
-	if ((n= recv(sockfd, &ack, 2, 0))==-1)                                   //receive the ack
-	{
+	if ((n= recvfrom(sockfd, &ack, 2, 0, addr, addrlen))==-1)                                   //receive the ack
+	{ 
 		printf("error when receiving\n");
 		exit(1);
 	}
