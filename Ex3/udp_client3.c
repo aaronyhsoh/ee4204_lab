@@ -142,6 +142,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 				}
 				if (ack.num == 1 && ack.len == 0) {
 					retransmit_fail = 0;
+					ci += slen;
 				}
 			}
 		} 
