@@ -29,14 +29,21 @@ int msleep(long msec)
 
 #define BACKLOG 10
 int msleep(long msec);
-void str_ser(int sockfd, struct sockaddr *addr, int len);                                                        // transmitting and receiving function
+void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob);                                                        // transmitting and receiving function
 
-int main(void)
+int main(int argc, char **argv)
 {
 	int sockfd, con_fd, ret;
 	struct sockaddr_in my_addr;
 	struct sockaddr_in their_addr;
 	int sin_size;
+	int error_prob;
+	
+	if (argc != 2) {
+		printf("parameters do not match");
+	}
+	
+	error_prob = atoi(argv[1]);
 
 //	char *buf;
 	pid_t pid;
@@ -61,15 +68,14 @@ int main(void)
 	
 	ret = listen(sockfd, BACKLOG);                              //listen
 
-	
 	printf("Waiting for data\n");
-	str_ser(sockfd, (struct sockaddr *)&my_addr, sizeof(struct sockaddr_in));
+	str_ser(sockfd, (struct sockaddr *)&my_addr, sizeof(struct sockaddr_in), error_prob);
 	printf("SUCCESS");
 	close(sockfd);
 	exit(0);
 }
 
-void str_ser(int sockfd, struct sockaddr *addr, int len)
+void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob);
 {
 	char buf[BUFSIZE];
 	FILE *fp;
@@ -79,6 +85,12 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 	long lseek=0;
 	end = 0;
 	int numPackets = 0;
+	int randNum;
+	
+	randomize();
+	
+	randNum = rand() % 100 + 1;
+	printf("random: %d\n", randNum);
 	
 	printf("receiving data!\n");
 
@@ -106,7 +118,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 		}
 		printf("Num packets: %d\n", numPackets);
 		numPackets++;
-		msleep(250);
+		msleep(100);
 	}
 	
 	if ((fp = fopen ("myTCPreceive.txt","wt")) == NULL)

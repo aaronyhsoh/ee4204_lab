@@ -135,7 +135,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 			printf("error in transmission\n");
 		} 
 		
-		printf("ack received");
+		printf("ack received\n");
 	}
 	
 	gettimeofday(&recvt, NULL);
