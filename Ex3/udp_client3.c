@@ -116,24 +116,23 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 			slen = DATALEN;
 		memcpy(sends, (buf+ci), slen);
 		// send data 
-		while ((n = sendto(sockfd, &sends, slen, 0, addr, addrlen)) == -1) {
+		if ((n = sendto(sockfd, &sends, slen, 0, addr, addrlen)) == -1) {
 			printf("send error!");		
-			retrans_count++;
-			if (retrans_count > 100) {
-				exit(1);
-			}
 		}
 		
-		ci += slen;
 		if ((n= recvfrom(sockfd, &ack, 2, 0, addr, (socklen_t *)&addrlen))==-1)                                   //receive the ack
 		{ 
 			printf("error when receiving\n");
 			exit(1);
 		}
-		if (ack.num != 1|| ack.len != 0) 
+		if (ack.num == 0|| ack.len != 0) 
 		{
 			printf("error in transmission\n");
+			retransmit(sockfd, &sends, addr, addrlen, ack);
 		} 
+		else {
+			ci += slen;
+		}
 		
 		printf("ack received: %d\n", ack.num);
 	}
@@ -144,6 +143,22 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 	time_inv += (recvt.tv_sec)*1000.0 + (recvt.tv_usec)/1000.0;
 	return(time_inv);
 }
+
+int retransmit(int sockfd, char sends[DATALEN+1], struct sockaddr *addr, int addrlen, struct ack_so *ack, int slen) {
+	int n;
+	
+	printf("retransmitting");
+	if ((n = sendto(sockfd, &sends, slen, 0, addr, addrlen)) == -1) {
+			printf("send error!");		
+		}
+		
+		if ((n= recvfrom(sockfd, &ack, 2, 0, addr, (socklen_t *)&addrlen))==-1)                                   //receive the ack
+		{  
+			printf("error when receiving\n");
+			exit(1);
+		}
+}
+	
 
 // 1: ack received from server
 // 0: no ack received, exit
