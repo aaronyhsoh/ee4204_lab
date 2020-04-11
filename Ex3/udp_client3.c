@@ -128,6 +128,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 		} 
 		else {
 			ci += slen;
+			printf("received ack");
 		}
 	}
 	
