@@ -7,7 +7,7 @@ udp_client.c: the source file of the client in tcp transmission
 float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrlen);                       //transmission function
 void tv_sub(struct  timeval *out, struct timeval *in);	    //calcu the time interval between out and in
 
-int main(int argc, char **argv, int error_prob)
+int main(int argc, char *argv[])
 {
 	int sockfd, ret;
 	float ti, rt;
@@ -18,7 +18,7 @@ int main(int argc, char **argv, int error_prob)
 	struct in_addr **addrs;
 	FILE *fp;
 	
-	printf("error_prob = %d\n", error_prob);
+	printf("error_prob = %s\n", argv[2]);
 
 	if (argc != 2) {
 		printf("parameters not match");
