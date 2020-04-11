@@ -128,7 +128,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 		if (ack.num == 0|| ack.len != 0) 
 		{
 			printf("error in transmission\n");
-			retransmit(sockfd, &sends, addr, addrlen, ack);
+			retransmit(sockfd, sends, addr, addrlen, ack, slen);
 		} 
 		else {
 			ci += slen;
@@ -144,7 +144,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 	return(time_inv);
 }
 
-int retransmit(int sockfd, char sends[DATALEN+1], struct sockaddr *addr, int addrlen, struct ack_so *ack, int slen) {
+int retransmit(int sockfd, char sends[DATALEN+1], struct sockaddr addr, int addrlen, struct ack_so ack, int slen) {
 	int n;
 	
 	printf("retransmitting");
