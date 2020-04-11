@@ -101,14 +101,20 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 			end = 1;
 			n --;
 		}
-		printf("n: %d\n", n);
-		memcpy((buf+lseek), recvs, n);
-		ack.num = 1;
-		ack.len = 0;
-		lseek += n;
 		
 		randNum = rand() % 100 + 1;
 		printf("random: %d\n", randNum);
+		
+		printf("n: %d\n", n);
+		memcpy((buf+lseek), recvs, n);
+		if (randNum < error_prob) {
+			ack.num = 0;
+			ack.len = 0;
+		} else {
+			ack.num = 1;
+			ack.len = 0;
+		}
+		lseek += n;
 		
 		if ((n = sendto(sockfd, &ack, 2, 0, addr, len)==-1))
 		{
