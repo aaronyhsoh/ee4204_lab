@@ -105,7 +105,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 		}
 		printf("Num packets: %d\n", numPackets);
 		numPackets++;
-		msleep(1000);
+		msleep(250);
 	}
 	
 	if ((fp = fopen ("myTCPreceive.txt","wt")) == NULL)

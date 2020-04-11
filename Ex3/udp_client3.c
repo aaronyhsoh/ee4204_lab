@@ -122,7 +122,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 			printf("error when receiving\n");
 			exit(1);
 		}
-		if (ack.num != 1|| ack.len != 0) 
+		else if (ack.num != 1|| ack.len != 0) 
 		{
 			printf("error in transmission\n");
 		} 
