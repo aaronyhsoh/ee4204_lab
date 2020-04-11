@@ -50,7 +50,7 @@ int main(void)
 	exit(0);
 }
 
-void str_ser(int sockfd, struct *sockaddr addr, int len)
+void str_ser(int sockfd, struct sockaddr *addr, int len)
 {
 	char buf[BUFSIZE];
 	FILE *fp;
