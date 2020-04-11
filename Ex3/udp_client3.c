@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 	exit(0);
 }
 
-float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr addr, int addrlen)
+float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrlen)
 {
 	char *buf;
 	long lsize, ci;
