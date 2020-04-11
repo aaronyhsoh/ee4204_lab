@@ -74,12 +74,12 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 		memcpy((buf+lseek), recvs, n);
 		ack.num = 1;
 		ack.len = 0;
+		lseek += n;
 		if ((n = sendto(sockfd, &ack, 2, 0, addr, len)==-1))
 		{
 			printf("send error!");								//send the ack
 			exit(1);
 		}
-		lseek += n;
 		printf("Num packets: %d\n", numPackets);
 		numPackets++;
 	}
