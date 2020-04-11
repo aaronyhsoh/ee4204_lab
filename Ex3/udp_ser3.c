@@ -87,9 +87,6 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 	int numPackets = 0;
 	int randNum;
 	
-	randNum = rand() % 100 + 1;
-	printf("random: %d\n", randNum);
-	
 	printf("receiving data!\n");
 
 	while(!end)
@@ -109,6 +106,10 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 		ack.num = 1;
 		ack.len = 0;
 		lseek += n;
+		
+		randNum = rand() % 100 + 1;
+		printf("random: %d\n", randNum);
+		
 		if ((n = sendto(sockfd, &ack, 2, 0, addr, len)==-1))
 		{
 			printf("send error!");								//send the ack
