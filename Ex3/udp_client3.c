@@ -4,7 +4,7 @@ udp_client.c: the source file of the client in tcp transmission
 
 #include "headsock.h"
 
-int send_packet(int sockfd, char sends[DATALEN+1] long slen, struct sockaddr *addr, int addrlen);
+int send_packet(int sockfd, char sends[DATALEN+1], long slen, struct sockaddr *addr, int addrlen);
 float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrlen);                       //transmission function
 void tv_sub(struct  timeval *out, struct timeval *in);	    //calcu the time interval between out and in
 
@@ -165,7 +165,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 // 1: ack received from server
 // 0: no ack received, exit
 // -1: ARQ received
-int send_packet(int sockfd, char sends[DATALEN+1] long slen, struct sockaddr *addr, int addrlen) {
+int send_packet(int sockfd, char sends[DATALEN+1], long slen, struct sockaddr *addr, int addrlen) {
 	int n;
 	int retrans_count = 0;
 	struct ack_so ack;
