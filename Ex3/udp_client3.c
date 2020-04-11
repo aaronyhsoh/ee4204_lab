@@ -151,7 +151,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 		// else {
 			// ci += slen;
 		// }
-		ci += slen
+		ci += slen;
 		printf("received ack");
 	}
 	
@@ -165,7 +165,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 // 1: ack received from server
 // 0: no ack received, exit
 // -1: ARQ received
-int send_packet(int sockfd, char sends[DATALEN+1], long slen, struct sockaddr *addr, int addrlen) {
+int send_packet(int sockfd, char *sends[DATALEN+1], long slen, struct sockaddr *addr, int addrlen) {
 	int n;
 	int retrans_count = 0;
 	struct ack_so ack;
