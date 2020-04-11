@@ -79,7 +79,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 	}
 	ack.num = 1;
 	ack.len = 0;
-	if ((n = sendto(sockfd, &ack, 2, 0, addr, len)==-1)
+	if ((n = sendto(sockfd, &ack, 2, 0, addr, len)==-1))
 	{
 			printf("send error!");								//send the ack
 			exit(1);
