@@ -7,7 +7,7 @@ udp_client.c: the source file of the client in tcp transmission
 // int send_packet(int sockfd, char sends[DATALEN+1], long slen, struct sockaddr *addr, int addrlen);
 float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrlen);                       //transmission function
 void tv_sub(struct  timeval *out, struct timeval *in);	    //calcu the time interval between out and in
-int retransmit(int sockfd, char sends[DATALEN+1], struct sockaddr addr, int addrlen, struct ack_so ack, int slen);
+// int retransmit(int sockfd, char sends[DATALEN+1], struct sockaddr addr, int addrlen, struct ack_so ack, int slen);
 
 int main(int argc, char *argv[])
 {
@@ -128,7 +128,22 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 		if (ack.num == 0|| ack.len != 0) 
 		{
 			printf("error in transmission\n");
-			retransmit(sockfd, sends, addr, addrlen, ack, slen);
+			//retransmit(sockfd, sends, addr, addrlen, ack, slen);
+			int retransmit_fail = 1;
+			while (retransmit_fail) {
+				printf("retransmitting");
+				if ((n = sendto(sockfd, &sends, slen, 0, addr, addrlen)) == -1) {
+					printf("send error!");		
+				}
+				if ((n= recvfrom(sockfd, &ack, 2, 0, addr, (socklen_t *)&addrlen))==-1)                                   //receive the ack
+				{ 
+					printf("error when receiving\n");
+					exit(1);
+				}
+				if (ack.num == 1 && ack.len == 0) {
+					retransmit_fail = 0;
+				}
+			}
 		} 
 		else {
 			ci += slen;
@@ -144,20 +159,20 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 	return(time_inv);
 }
 
-int retransmit(int sockfd, char sends[DATALEN+1], struct sockaddr addr, int addrlen, struct ack_so ack, int slen) {
-	int n;
+// int retransmit(int sockfd, char sends[DATALEN+1], struct sockaddr addr, int addrlen, struct ack_so ack, int slen) {
+	// int n;
 	
-	printf("retransmitting");
-	if ((n = sendto(sockfd, &sends, slen, 0, addr, addrlen)) == -1) {
-			printf("send error!");		
-		}
+	// printf("retransmitting");
+	// if ((n = sendto(sockfd, &sends, slen, 0, addr, addrlen)) == -1) {
+			// printf("send error!");		
+		// }
 		
-		if ((n= recvfrom(sockfd, &ack, 2, 0, addr, (socklen_t *)&addrlen))==-1)                                   //receive the ack
-		{  
-			printf("error when receiving\n");
-			exit(1);
-		}
-}
+		// if ((n= recvfrom(sockfd, &ack, 2, 0, addr, (socklen_t *)&addrlen))==-1)                                   //receive the ack
+		// {  
+			// printf("error when receiving\n");
+			// exit(1);
+		// }
+// }
 	
 
 // 1: ack received from server
