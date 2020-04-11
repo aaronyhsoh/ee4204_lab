@@ -131,7 +131,7 @@ float str_cli(FILE *fp, int sockfd, long *len, struct sockaddr *addr, int addrle
 			//retransmit(sockfd, sends, addr, addrlen, ack, slen);
 			int retransmit_fail = 1;
 			while (retransmit_fail) {
-				printf("retransmitting");
+				printf("retransmitting\n");
 				if ((n = sendto(sockfd, &sends, slen, 0, addr, addrlen)) == -1) {
 					printf("send error!");		
 				}

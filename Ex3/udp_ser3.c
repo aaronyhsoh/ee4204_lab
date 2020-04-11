@@ -126,7 +126,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 		msleep(50);
 	}
 	
-	if ((fp = fopen ("myTCPreceive.txt","wt")) == NULL)
+	if ((fp = fopen ("myUDPreceive.txt","wt")) == NULL)
 	{
 		printf("File doesn't exit\n");
 		exit(0);
