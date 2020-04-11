@@ -113,8 +113,8 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 		} else {
 			ack.num = 1;
 			ack.len = 0;
+			lseek += n;
 		}
-		lseek += n;
 		
 		if ((n = sendto(sockfd, &ack, 2, 0, addr, len)==-1))
 		{
