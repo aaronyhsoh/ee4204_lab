@@ -3,6 +3,7 @@ tcp_ser.c: the source file of the server in tcp transmission
 ***********************************/
 
 #include "headsock.h"
+#include <stdlib.h>
 
 #define BACKLOG 10
 
@@ -82,6 +83,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 		}
 		printf("Num packets: %d\n", numPackets);
 		numPackets++;
+		delay(1000);
 	}
 	
 	if ((fp = fopen ("myTCPreceive.txt","wt")) == NULL)
