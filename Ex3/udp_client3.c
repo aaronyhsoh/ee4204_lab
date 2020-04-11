@@ -18,7 +18,7 @@ int main(int argc, char **argv, int error_prob)
 	struct in_addr **addrs;
 	FILE *fp;
 	
-	printf("error_prob = %d\n", &error_prob)'
+	printf("error_prob = %d\n", &error_prob);
 
 	if (argc != 2) {
 		printf("parameters not match");
