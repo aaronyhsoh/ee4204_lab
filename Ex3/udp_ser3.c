@@ -7,7 +7,7 @@ tcp_ser.c: the source file of the server in tcp transmission
 
 #define BACKLOG 10
 
-void str_ser(int sockfd);                                                        // transmitting and receiving function
+void str_ser(int sockfd *addr, int len);                                                        // transmitting and receiving function
 
 int main(void)
 {
