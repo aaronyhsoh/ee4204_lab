@@ -28,7 +28,7 @@ int msleep(long msec)
 }
 
 #define BACKLOG 10
-int msleep(msec);
+int msleep(long msec);
 void str_ser(int sockfd, struct sockaddr *addr, int len);                                                        // transmitting and receiving function
 
 int main(void)
