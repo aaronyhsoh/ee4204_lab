@@ -71,15 +71,16 @@ void str_ser(int sockfd, struct sockaddr *addr, int len)
 			n --;
 		}
 		memcpy((buf+lseek), recvs, n);
-		lseek += n;
-	}
-	ack.num = 1;
-	ack.len = 0;
-	if ((n = sendto(sockfd, &ack, 2, 0, addr, len)==-1))
-	{
+		ack.num = 1;
+		ack.len = 0;
+		if ((n = sendto(sockfd, &ack, 2, 0, addr, len)==-1))
+		{
 			printf("send error!");								//send the ack
 			exit(1);
+		}
+		lseek += n;
 	}
+	
 	if ((fp = fopen ("myTCPreceive.txt","wt")) == NULL)
 	{
 		printf("File doesn't exit\n");
