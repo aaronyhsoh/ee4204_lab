@@ -123,7 +123,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 		}
 		printf("Num packets: %d\n", numPackets);
 		numPackets++;
-		msleep(100);
+		msleep(50);
 	}
 	
 	if ((fp = fopen ("myTCPreceive.txt","wt")) == NULL)
