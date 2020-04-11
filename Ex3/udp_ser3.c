@@ -38,10 +38,7 @@ int main(void)
 	}
 	
 	ret = listen(sockfd, BACKLOG);                              //listen
-	if (ret <0) {
-		printf("error in listening");
-		exit(1);
-	}
+
 	
 	printf("Waiting for data\n");
 	str_ser(sockfd, (struct sockaddr *)&my_addr, sizeof(struct sockaddr_in));
