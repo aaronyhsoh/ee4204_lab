@@ -110,6 +110,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 		if (randNum < error_prob) {
 			ack.num = 0;
 			ack.len = 0;
+			end = 0;
 		} else {
 			ack.num = 1;
 			ack.len = 0;
