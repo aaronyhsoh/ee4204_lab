@@ -121,7 +121,7 @@ void str_ser(int sockfd, struct sockaddr *addr, int len, int error_prob)
 			printf("send error!");								//send the ack
 			exit(1);
 		}
-		//printf("Num packets: %d\n", numPackets);
+		printf("Num packets: %d\n", numPackets);
 		numPackets++;
 		//msleep(50);
 	}
